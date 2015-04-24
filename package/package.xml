@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+<umbPackage>
+	<files>
+		<file>
+			<guid>HeadContent.xslt</guid>
+			<orgPath>/xslt</orgPath>
+			<orgName>HeadContent.xslt</orgName>
+		</file>
+		<file>
+			<guid>ScriptContent.xslt</guid>
+			<orgPath>/xslt</orgPath>
+			<orgName>ScriptContent.xslt</orgName>
+		</file>
+		<file>
+			<guid>BodyClass.xslt</guid>
+			<orgPath>/xslt</orgPath>
+			<orgName>BodyClass.xslt</orgName>
+		</file>
+		<file>
+			<guid>SiteSettings.config</guid>
+			<orgPath>/Config</orgPath>
+			<orgName>SiteSettings.config</orgName>
+		</file>
+	</files>
+	<info>
+		<package>
+			<name>Umbraco 7 Basics</name>
+			<version>1.0</version>
+			<license url="http://opensource.org/licenses/MIT">MIT License</license>
+			<url>http://vokseverk.dk/packages/u7basics</url>
+			<requirements>
+				<major>3</major>
+				<minor>0</minor>
+				<patch>0</patch>
+			</requirements>
+		</package>
+		<author>
+			<name>Vokseverk</name>
+			<website>http://vokseverk.dk</website>
+		</author>
+		<readme><![CDATA[# Umbraco 7 Basics
+
+This package contains just the bare minimum we need to start a site in Umbraco 7.
+
+*Copyright 2015 by Vokseværk - http://vokseverk.dk*
+]]></readme>
+	</info>
+	<DocumentTypes>
+		<DocumentType>
+			<Info>
+				<Name>Tekstside</Name>
+				<Alias>Textpage</Alias>
+				<Icon>icon-document</Icon>
+				<Thumbnail>folder.png</Thumbnail>
+				<Description>Standard textpage</Description>
+				<AllowAtRoot>False</AllowAtRoot>
+				<IsListView>False</IsListView>
+				<Compositions/>
+				<AllowedTemplates>
+					<Template>Textpage</Template>
+				</AllowedTemplates>
+				<DefaultTemplate>Textpage</DefaultTemplate>
+			</Info>
+			<Structure>
+				<DocumentType>Textpage</DocumentType>
+			</Structure>
+			<GenericProperties>
+				<GenericProperty>
+					<Name>Billede</Name>
+					<Alias>image</Alias>
+					<Type>Umbraco.MultipleMediaPicker</Type>
+					<Definition>93929b9a-93a2-4e2a-b239-d99334440a59</Definition>
+					<Tab>Billede</Tab>
+					<Mandatory>False</Mandatory>
+					<Validation/>
+					<Description>Vælg billede, der passer til siden.</Description>
+				</GenericProperty>
+				<GenericProperty>
+					<Name>Tekst</Name>
+					<Alias>bodyText</Alias>
+					<Type>Umbraco.TinyMCEv3</Type>
+					<Definition>6042379f-c349-47bd-a16a-801f504c8c7f</Definition>
+					<Tab>Indhold</Tab>
+					<Mandatory>False</Mandatory>
+					<Validation/>
+					<Description></Description>
+				</GenericProperty>
+			</GenericProperties>
+			<Tabs>
+				<Tab>
+					<Id>26</Id>
+					<Caption>Billede</Caption>
+					<SortOrder>15</SortOrder>
+				</Tab>
+				<Tab>
+					<Id>41</Id>
+					<Caption>Indhold</Caption>
+					<SortOrder>0</SortOrder>
+				</Tab>
+			</Tabs>
+		</DocumentType>
+		<DocumentType>
+			<Info>
+				<Name>Website</Name>
+				<Alias>Website</Alias>
+				<Icon>icon-home</Icon>
+				<Thumbnail>folder.png</Thumbnail>
+				<Description>Contains a complete site in a specific language</Description>
+				<AllowAtRoot>False</AllowAtRoot>
+				<IsListView>False</IsListView>
+				<Compositions/>
+				<AllowedTemplates>
+					<Template>HomePage</Template>
+				</AllowedTemplates>
+				<DefaultTemplate>HomePage</DefaultTemplate>
+			</Info>
+			<Structure>
+				<DocumentType>Textpage</DocumentType>
+			</Structure>
+			<GenericProperties>
+				<GenericProperty>
+					<Name>Billede</Name>
+					<Alias>image</Alias>
+					<Type>Umbraco.MultipleMediaPicker</Type>
+					<Definition>93929b9a-93a2-4e2a-b239-d99334440a59</Definition>
+					<Tab>Billeder</Tab>
+					<Mandatory>False</Mandatory>
+					<Validation/>
+					<Description>Vælg det store billede til forsiden.</Description>
+				</GenericProperty>
+			</GenericProperties>
+			<Tabs>
+				<Tab>
+					<Id>21</Id>
+					<Caption>Billeder</Caption>
+					<SortOrder>11</SortOrder>
+				</Tab>
+			</Tabs>
+		</DocumentType>
+	</DocumentTypes>
+	<Templates>
+		<Template>
+			<Name>Home Page</Name>
+			<Alias>HomePage</Alias>
+			<Master>StandardPageLayout</Master>
+			<Design><![CDATA[@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "StandardPageLayout.cshtml";
+}
+]]></Design>
+		</Template>
+		<Template>
+			<Name>Master Layout</Name>
+			<Alias>MasterLayout</Alias>
+			<Design><![CDATA[@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = null;
+}<!DOCTYPE html>
+<html lang="da">
+<head>
+	
+@Umbraco.RenderMacro("HeadContent")
+	
+</head>
+<body @Umbraco.RenderMacro("BodyClass")>
+
+@RenderBody()
+
+@Umbraco.RenderMacro("ScriptContent")
+
+</body>
+</html>
+]]></Design>
+		</Template>
+		<Template>
+			<Name>Standard Page Layout</Name>
+			<Alias>StandardPageLayout</Alias>
+			<Master>MasterLayout</Master>
+			<Design><![CDATA[@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterLayout.cshtml";
+}
+
+@RenderBody()
+]]></Design>
+		</Template>
+		<Template>
+			<Name>Textpage</Name>
+			<Alias>Textpage</Alias>
+			<Master>StandardPageLayout</Master>
+			<Design><![CDATA[@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "StandardPageLayout.cshtml";
+}
+
+]]></Design>
+		</Template>
+	</Templates>
+	<Stylesheets>
+		<Stylesheet>
+			<Name>wysiwyg</Name>
+			<FileName/>
+			<Content></Content>
+			<Properties>
+				<Property>
+					<Name>Overskrift</Name>
+					<Alias>h2</Alias>
+					<Value/>
+				</Property>
+				<Property>
+					<Name>Rubrik</Name>
+					<Alias>h3</Alias>
+					<Value/>
+				</Property>
+				<Property>
+					<Name>Brødtekst</Name>
+					<Alias>p</Alias>
+					<Value/>
+				</Property>
+			</Properties>
+		</Stylesheet>
+	</Stylesheets>
+	<Macros>
+		<macro>
+			<name>Head Content</name>
+			<alias>HeadContent</alias>
+			<scriptType/>
+			<scriptAssembly/>
+			<xslt>HeadContent.xslt</xslt>
+			<useInEditor>False</useInEditor>
+			<refreshRate>0</refreshRate>
+			<scriptingFile/>
+			<properties/>
+		</macro>
+		<macro>
+			<name>Script Content</name>
+			<alias>ScriptContent</alias>
+			<scriptType/>
+			<scriptAssembly/>
+			<xslt>ScriptContent.xslt</xslt>
+			<useInEditor>False</useInEditor>
+			<refreshRate>0</refreshRate>
+			<scriptingFile/>
+			<properties/>
+		</macro>
+		<macro>
+			<name>Body Class</name>
+			<alias>BodyClass</alias>
+			<scriptType/>
+			<scriptAssembly/>
+			<xslt>BodyClass.xslt</xslt>
+			<useInEditor>False</useInEditor>
+			<refreshRate>0</refreshRate>
+			<scriptingFile/>
+			<properties/>
+		</macro>
+	</Macros>
+	<DictionaryItems/>
+	<Languages/>
+	<DataTypes>
+		<DataType Name="[VV] WYSIWYG" Id="Umbraco.TinyMCEv3" Definition="6042379f-c349-47bd-a16a-801f504c8c7f" DatabaseType="Ntext">
+			<PreValues>
+				<PreValue Id="520" Value="{&#13;&#10;  &quot;toolbar&quot;: [&#13;&#10;    &quot;removeformat&quot;,&#13;&#10;    &quot;styleselect&quot;,&#13;&#10;    &quot;bold&quot;,&#13;&#10;    &quot;italic&quot;,&#13;&#10;    &quot;bullist&quot;,&#13;&#10;    &quot;numlist&quot;,&#13;&#10;    &quot;link&quot;,&#13;&#10;    &quot;unlink&quot;,&#13;&#10;    &quot;umbmacro&quot;&#13;&#10;  ],&#13;&#10;  &quot;stylesheets&quot;: [&#13;&#10;    &quot;wysiwyg&quot;&#13;&#10;  ],&#13;&#10;  &quot;dimensions&quot;: {&#13;&#10;    &quot;height&quot;: 300,&#13;&#10;    &quot;width&quot;: 500&#13;&#10;  },&#13;&#10;  &quot;maxImageSize&quot;: 500&#13;&#10;}" Alias="editor"/>
+				<PreValue Id="521" Value="" Alias="hideLabel"/>
+			</PreValues>
+		</DataType>
+	</DataTypes>
+</umbPackage>
